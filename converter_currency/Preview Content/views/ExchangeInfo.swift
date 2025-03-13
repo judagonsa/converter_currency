@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct ExchangeInfoView: View {
+struct ExchangeInfo: View {
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         ZStack {
             Image(.parchment)
@@ -21,32 +23,32 @@ struct ExchangeInfoView: View {
                 Text("En esta App, entendemos que cambiar moneda puede ser una parte importante de tus viajes o transacciones internacionales. Por eso, nos esforzamos por ofrecerte una experiencia fácil y conveniente. Contamos con una amplia variedad de monedas extranjeras disponibles y actualizamos nuestros tipos de cambio constantemente para asegurarnos de que obtengas el mejor precio posible. Nuestro personal experto está aquí para responder a tus preguntas y ayudarte con cualquier duda que puedas tener. ¡Ven y descubre la diferencia de [Nombre de la Casa de Cambio")
                     .padding()
                 
-                InfoRateView(
+                ExchangeInfoRate(
                     leftImage: .goldpiece,
                     textExchange: "1 Golden piece = 4 Golden penines",
                     rightImage: .goldpenny
                 )
                 
-                InfoRateView(
+                ExchangeInfoRate(
                     leftImage: .goldpenny,
                     textExchange: "1 Golden penny = 4 Silver pieces",
                     rightImage: .silverpiece
                 )
                 
-                InfoRateView(
+                ExchangeInfoRate(
                     leftImage: .silverpiece,
                     textExchange: "1 Silver piece = 4 Silver penines",
                     rightImage: .silverpenny
                 )
                 
-                InfoRateView(
+                ExchangeInfoRate(
                     leftImage: .silverpenny,
                     textExchange: "1 Silver penny = 100 Copper penines",
                     rightImage: .copperpenny
                 )
                 
                 Button("Done") {
-                    
+                    dismiss()
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.brown.mix(with: .black, by: 0.2))
@@ -62,29 +64,5 @@ struct ExchangeInfoView: View {
 }
 
 #Preview {
-    ExchangeInfoView()
-}
-
-struct InfoRateView: View {
-    
-    var leftImage: ImageResource
-    var textExchange: String
-    var rightImage: ImageResource
-    
-    var body: some View {
-        HStack{
-            Image(leftImage)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 33)
-            
-            Text(textExchange)
-                .font(.footnote)
-            
-            Image(rightImage)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 33)
-        }
-    }
+    ExchangeInfo()
 }
