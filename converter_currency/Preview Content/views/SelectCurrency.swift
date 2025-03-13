@@ -21,6 +21,7 @@ struct SelectCurrency: View {
                 Text("Select de currency you are starting with:")
                     .fontWeight(.bold)
                 
+                
                 CurrencyIcon(image: .goldpenny, name: "Golden Peny")
                 
                 
