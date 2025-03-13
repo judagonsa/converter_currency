@@ -18,7 +18,7 @@ struct ExchangeInfoView: View {
                     .font(.largeTitle)
                     .tracking(3)
                 
-                Text("Aquí la información")
+                Text("En esta App, entendemos que cambiar moneda puede ser una parte importante de tus viajes o transacciones internacionales. Por eso, nos esforzamos por ofrecerte una experiencia fácil y conveniente. Contamos con una amplia variedad de monedas extranjeras disponibles y actualizamos nuestros tipos de cambio constantemente para asegurarnos de que obtengas el mejor precio posible. Nuestro personal experto está aquí para responder a tus preguntas y ayudarte con cualquier duda que puedas tener. ¡Ven y descubre la diferencia de [Nombre de la Casa de Cambio")
                     .padding()
                 
                 InfoRateView(
@@ -34,7 +34,7 @@ struct ExchangeInfoView: View {
                 )
                 
                 InfoRateView(
-                    leftImage: .silverpenny,
+                    leftImage: .silverpiece,
                     textExchange: "1 Silver piece = 4 Silver penines",
                     rightImage: .silverpenny
                 )
@@ -48,12 +48,14 @@ struct ExchangeInfoView: View {
                 Button("Done") {
                     
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.borderedProminent)
                 .tint(.brown.mix(with: .black, by: 0.2))
                 .font(.title2)
                 .padding()
+                .foregroundStyle(.white)
                 
             }
+            .foregroundStyle(.black)
         }
         .background(.brown)
     }
