@@ -21,13 +21,20 @@ struct SelectCurrency: View {
                 Text("Select de currency you are starting with:")
                     .fontWeight(.bold)
                 
-                
-                CurrencyIcon(image: .goldpenny, name: "Golden Peny")
-                
+                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]){
+                    ForEach(Currency.allCases) { currency in
+                        CurrencyIcon(image: currency.image, name: currency.name)
+                    }
+                }
                 
                 Text("Select de currency you would like to convert to:")
                     .fontWeight(.bold)
                 
+                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]){
+                    ForEach(Currency.allCases) { currency in
+                        CurrencyIcon(image: currency.image, name: currency.name)
+                    }
+                }
                 
                 Button("Done") {
                     dismiss()
