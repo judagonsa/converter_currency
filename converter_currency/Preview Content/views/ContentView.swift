@@ -11,7 +11,12 @@ struct ContentView: View {
     
     @State private var amountSilver = ""
     @State private var amountGolden = ""
+    
+    @State var currencyFrom: Currency = .silverPiece
+    @State var currencyTo: Currency = .goldPiece
+    
     @State private var showExchangeInfo = false
+    @State private var showSelectCurrency = false
     
     var body: some View {
 
@@ -33,13 +38,16 @@ struct ContentView: View {
                 HStack {
                     VStack {
                         HStack {
-                            Image(.silverpiece)
+                            Image(currencyFrom.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 33)
-                            Text("Silver price")
+                            Text(currencyFrom.name)
                                 .font(.headline)
                                 .foregroundStyle(.white)
+                        }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
                         }
                         
                         TextField("Amount", text: $amountSilver)
@@ -53,13 +61,16 @@ struct ContentView: View {
                     
                     VStack {
                         HStack {
-                            Text("Golden price")
+                            Text(currencyTo.name)
                                 .font(.headline)
                                 .foregroundStyle(.white)
-                            Image(.goldpiece)
+                            Image(currencyTo.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 33)
+                        }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
                         }
                         
                         TextField("Amount", text: $amountGolden)
@@ -89,6 +100,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showExchangeInfo) {
             ExchangeInfo()
+        }
+        .sheet(isPresented: $showSelectCurrency) {
+            SelectCurrency(currencyFrom: currencyFrom, currencyTo: currencyTo)
         }
     }
 }

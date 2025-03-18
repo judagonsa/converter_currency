@@ -10,7 +10,8 @@ import SwiftUI
 struct SelectCurrency: View {
     @Environment(\.dismiss) var dismiss
     
-    @State var currency: Currency
+    @State var currencyFrom: Currency
+    @State var currencyTo: Currency
     
     var body: some View {
         ZStack {
@@ -23,29 +24,13 @@ struct SelectCurrency: View {
                 Text("Select de currency you are starting with:")
                     .fontWeight(.bold)
                 
-                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]){
-                    ForEach(Currency.allCases) { currency in
-                        CurrencyIcon(image: currency.image, name: currency.name)
-                            .shadow(color: .black,  radius: 5)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(lineWidth: self.currency == currency ? 3 : 0)
-                                    .opacity(0.5)
-                            }
-                            .onTapGesture {
-                                self.currency = currency
-                            }
-                    }
-                }
+                IconGrid(currency: currencyFrom)
                 
                 Text("Select de currency you would like to convert to:")
                     .fontWeight(.bold)
+                    .padding(.top, 10)
                 
-                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]){
-                    ForEach(Currency.allCases) { currency in
-                        CurrencyIcon(image: currency.image, name: currency.name)
-                    }
-                }
+                IconGrid(currency: currencyTo)
                 
                 Button("Done") {
                     dismiss()
@@ -58,12 +43,13 @@ struct SelectCurrency: View {
             }
             .padding()
             .multilineTextAlignment(.center)
+            .foregroundStyle(.black)
         }
     }
 }
 
 #Preview {
-    SelectCurrency(currency: .silverPenny)
+    SelectCurrency(currencyFrom: .silverPenny, currencyTo: .copperPenny)
 }
 
 
