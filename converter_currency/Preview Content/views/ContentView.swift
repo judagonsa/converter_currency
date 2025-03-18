@@ -9,14 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var amountSilver = ""
-    @State private var amountGolden = ""
+    @State private var currencyLeft = ""
+    @State private var currencyRight = ""
     
     @State var currencyFrom: Currency = .silverPiece
     @State var currencyTo: Currency = .goldPiece
     
     @State private var showExchangeInfo = false
     @State private var showSelectCurrency = false
+    
+    @FocusState var currencyLeftFocusState
+    @FocusState var currencyRightFocusState
     
     var body: some View {
 
@@ -50,8 +53,19 @@ struct ContentView: View {
                             showSelectCurrency.toggle()
                         }
                         
-                        TextField("Amount", text: $amountSilver)
+                        TextField("Amount from", text: $currencyLeft)
                             .textFieldStyle(.roundedBorder)
+                            .focused($currencyLeftFocusState)
+                            .onChange(of: currencyLeft) {
+                                if currencyLeftFocusState {
+                                    currencyRight = currencyFrom
+                                        .convert(amountString: currencyLeft, currencyTo: currencyTo)
+                                }
+                            }
+                            .onTapGesture {
+                                currencyLeft = ""
+                                currencyRight = ""
+                            }
                     }
                     
                     Image(systemName: "equal")
@@ -73,9 +87,17 @@ struct ContentView: View {
                             showSelectCurrency.toggle()
                         }
                         
-                        TextField("Amount", text: $amountGolden)
+                        TextField("Amount to", text: $currencyRight)
                             .textFieldStyle(.roundedBorder)
                             .multilineTextAlignment(.trailing)
+                            .focused($currencyRightFocusState)
+                            .onChange(of: currencyRight) {
+                                if currencyRightFocusState {
+                                    currencyLeft = currencyTo
+                                        .convert(amountString: currencyRight, currencyTo: currencyFrom)
+                                }
+                            }
+                        
                     }
                 }
                 .padding()
