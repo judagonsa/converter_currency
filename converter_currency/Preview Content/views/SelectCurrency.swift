@@ -32,14 +32,18 @@ struct SelectCurrency: View {
                 
                 IconGrid(currency: $currencyTo)
                 
-                Button("Done") {
-                    dismiss()
+                HStack(spacing: 0) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.brown.mix(with: .black, by: 0.2))
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                    .clipShape(.rect(cornerRadius: 10))
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.brown.mix(with: .black, by: 0.2))
-                .font(.title2)
-                .padding()
-                .foregroundStyle(.white)
+                .padding(.vertical)
             }
             .padding()
             .multilineTextAlignment(.center)

@@ -102,7 +102,7 @@ struct ContentView: View {
                 }
                 .padding()
                 .background(.black.opacity(0.3))
-                .clipShape(.buttonBorder)
+                .clipShape(.rect(cornerRadius: 20))
                 .padding(10)
                 
                 Spacer()
