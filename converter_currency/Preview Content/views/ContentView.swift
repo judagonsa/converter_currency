@@ -1,9 +1,9 @@
-//
-//  ContentView.swift
-//  converter_currency
-//
-//  Created by Julian González on 28/01/25.
-//
+    //
+    //  ContentView.swift
+    //  converter_currency
+    //
+    //  Created by Julian González on 28/01/25.
+    //
 
 import SwiftUI
 
@@ -22,12 +22,12 @@ struct ContentView: View {
     @FocusState var currencyRightFocusState
     
     var body: some View {
-
+        
         ZStack {
             Image(.background)
                 .resizable()
                 .ignoresSafeArea()
-                
+            
             VStack {
                 Image(.prancingpony)
                     .resizable()
@@ -37,7 +37,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-
+                
                 HStack {
                     VStack {
                         HStack {
@@ -53,19 +53,10 @@ struct ContentView: View {
                             showSelectCurrency.toggle()
                         }
                         
+                        // MARK: Ammount from
                         TextField("Amount from", text: $currencyLeft)
                             .textFieldStyle(.roundedBorder)
                             .focused($currencyLeftFocusState)
-                            .onChange(of: currencyLeft) {
-                                if currencyLeftFocusState {
-                                    currencyRight = currencyFrom
-                                        .convert(amountString: currencyLeft, currencyTo: currencyTo)
-                                }
-                            }
-                            .onTapGesture {
-                                currencyLeft = ""
-                                currencyRight = ""
-                            }
                     }
                     
                     Image(systemName: "equal")
@@ -87,16 +78,11 @@ struct ContentView: View {
                             showSelectCurrency.toggle()
                         }
                         
+                        // MARK: Ammount to
                         TextField("Amount to", text: $currencyRight)
                             .textFieldStyle(.roundedBorder)
                             .multilineTextAlignment(.trailing)
                             .focused($currencyRightFocusState)
-                            .onChange(of: currencyRight) {
-                                if currencyRightFocusState {
-                                    currencyLeft = currencyTo
-                                        .convert(amountString: currencyRight, currencyTo: currencyFrom)
-                                }
-                            }
                         
                     }
                 }
@@ -104,6 +90,7 @@ struct ContentView: View {
                 .background(.black.opacity(0.3))
                 .clipShape(.rect(cornerRadius: 20))
                 .padding(10)
+                .keyboardType(.decimalPad)
                 
                 Spacer()
                 
@@ -119,6 +106,26 @@ struct ContentView: View {
                     .padding(.trailing, 20)
                 }
             }
+        }
+        .onChange(of: currencyRight) {
+            if currencyRightFocusState {
+                currencyLeft = currencyTo
+                    .convert(currencyRight, to: currencyFrom)
+            }
+        }
+        .onChange(of: currencyLeft) {
+            if currencyLeftFocusState {
+                currencyRight = currencyFrom
+                    .convert(currencyLeft, to: currencyTo)
+            }
+        }
+        .onChange(of: currencyFrom){
+            currencyLeft = currencyTo
+                .convert(currencyRight, to: currencyFrom)
+        }
+        .onChange(of: currencyTo){
+            currencyRight = currencyFrom
+                .convert(currencyLeft, to: currencyTo)
         }
         .sheet(isPresented: $showExchangeInfo) {
             ExchangeInfo()
