@@ -6,6 +6,7 @@
     //
 
 import SwiftUI
+import TipKit
 
 struct ContentView: View {
     
@@ -20,6 +21,8 @@ struct ContentView: View {
     
     @FocusState var currencyLeftFocusState
     @FocusState var currencyRightFocusState
+    
+    let currencyTip = CurrencyTip()
     
     var body: some View {
         
@@ -51,7 +54,9 @@ struct ContentView: View {
                         }
                         .onTapGesture {
                             showSelectCurrency.toggle()
+                            currencyTip.invalidate(reason: .actionPerformed)
                         }
+                        .popoverTip(currencyTip, arrowEdge: .top)
                         
                         // MARK: Ammount from
                         TextField("Amount from", text: $currencyLeft)
@@ -76,6 +81,7 @@ struct ContentView: View {
                         }
                         .onTapGesture {
                             showSelectCurrency.toggle()
+                            currencyTip.invalidate(reason: .actionPerformed)
                         }
                         
                         // MARK: Ammount to
@@ -106,6 +112,9 @@ struct ContentView: View {
                     .padding(.trailing, 20)
                 }
             }
+        }
+        .task {
+            try? Tips.configure()
         }
         .onChange(of: currencyRight) {
             if currencyRightFocusState {
